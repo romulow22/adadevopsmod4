@@ -46,7 +46,7 @@ resource "azurerm_kubernetes_cluster" "aks-cluster" {
   automatic_channel_upgrade = "stable"
   kubernetes_version        = var.cluster_version
   depends_on                = [var.rg_name,var.subnetaks_id]
-  azure_policy_enabled             = true
+  azure_policy_enabled      = true
 
   #oidc_issuer_enabled       = true
   #workload_identity_enabled = true
@@ -257,6 +257,5 @@ resource "helm_release" "nginx_ingress" {
     value = "Local"
   }
 
-  depends_on = [azurerm_kubernetes_cluster.aks-cluster,
-  ]
+  depends_on = [azurerm_kubernetes_cluster.aks-cluster, local_file.kubeconfig,local_file.kubeconfigyaml]
 }
